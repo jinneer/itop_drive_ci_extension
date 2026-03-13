@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.7">
+  <classes>
+    <!-- Drive Class Definition -->
+    <class id="Drive" _delta="define">
+      <parent>PhysicalDevice</parent>
+      <properties>
+        <category>bizmodel</category>
+        <abstract>false</abstract>
+        <key_type>autoincrement</key_type>
+        <db_table>drive</db_table>
+        <db_key_field>id</db_key_field>
+        <naming>
+          <attributes>
+            <attribute id="name"/>
+          </attributes>
+        </naming>
+        <display_template>
+          <![CDATA[<div class="field_container" style="width: 100%;">
+            <div class="field_label">Drive: $name$</div>
+          </div>]]>
+        </display_template>
+        <icon>drive.png</icon>
+        <reconciliation>
+          <attributes>
+            <attribute id="name"/>
+            <attribute id="org_id"/>
+          </attributes>
+        </reconciliation>
+      </properties>
+      <fields>
+        <!-- Override serialnumber to make it mandatory -->
+        <field id="serialnumber" xsi:type="AttributeString" _delta="redefine">
+          <sql>serialnumber</sql>
+          <default_value></default_value>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        
+        <!-- Drive-specific fields -->
+        <field id="tape_library_id" xsi:type="AttributeExternalKey">
+          <sql>tape_library_id</sql>
+          <target_class>TapeLibrary</target_class>
+          <is_null_allowed>false</is_null_allowed>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+          <filter>SELECT TapeLibrary</filter>
+        </field>
+        
+        <field id="tape_library_name" xsi:type="AttributeExternalField">
+          <extkey_attcode>tape_library_id</extkey_attcode>
+          <target_attcode>name</target_attcode>
+        </field>
+        
+        <field id="drive_type" xsi:type="AttributeEnum">
+          <sql>drive_type</sql>
+          <values>
+            <value id="lto8">lto8</value>
+            <value id="lto9">lto9</value>
+            <value id="ts1150">ts1150</value>
+            <value id="ts1160">ts1160</value>
+            <value id="other">other</value>
+          </values>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+      </fields>
+      
+      <presentation>
+        <details>
+          <items>
+            <item id="name"/>
+            <item id="tape_library_id"/>
+            <item id="drive_type"/>
+            <item id="status"/>
+            <item id="serialnumber"/>
+            <item id="model_id"/>
+            <item id="brand_id"/>
+            <item id="org_id"/>
+            <item id="location_id"/>
+            <item id="description"/>
+            <!-- Inherited tabs from PhysicalDevice -->
+            <item id="contacts_list"/>
+            <item id="documents_list"/>
+            <item id="tickets_list"/>
+            <item id="providercontracts_list"/>
+            <item id="services_list"/>
+          </items>
+        </details>
+        <search>
+          <items>
+            <item id="name"/>
+            <item id="tape_library_id"/>
+            <item id="status"/>
+            <item id="drive_type"/>
+            <item id="serialnumber"/>
+            <item id="org_id"/>
+          </items>
+        </search>
+        <list>
+          <items>
+            <item id="name"/>
+            <item id="tape_library_id"/>
+            <item id="status"/>
+            <item id="drive_type"/>
+            <item id="serialnumber"/>
+            <item id="org_id"/>
+          </items>
+        </list>
+      </presentation>
+    </class>
+    
+    <!-- Extend TapeLibrary to add reverse relationship -->
+    <class id="TapeLibrary" _delta="must_exist">
+      <fields>
+        <field id="drives_list" xsi:type="AttributeLinkedSet" _delta="define">
+          <linked_class>Drive</linked_class>
+          <ext_key_to_me>tape_library_id</ext_key_to_me>
+        </field>
+      </fields>
+    </class>
+  </classes>
+</itop_design>

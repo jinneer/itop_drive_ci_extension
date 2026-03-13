@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="https://www.itophub.io/ns/modules/1.0">
+  <id>itop-drive</id>
+  <name>Drive Management</name>
+  <version>1.0.0</version>
+  <description>Adds Drive CI class for tape library drives</description>
+  <itop-version-min>3.2.0</itop-version-min>
+  <dependencies>
+    <dependency id="itop-config-mgmt" version="3.2.0">.*</dependency>
+  </dependencies>
+</module>

@@ -1,0 +1,36 @@
+# Drive Icon Placeholder
+
+The drive icon should be placed at: `images/drive.png`
+
+## Requirements:
+- Size: 48x48 pixels
+- Format: PNG with transparency
+- Content: A simple tape drive graphic
+
+## Suggested Icon Design:
+A rectangular box representing a tape drive with:
+- A slot in the front (tape insertion point)
+- Status LEDs (small circles)
+- Clean, minimal design matching iTop's icon style
+
+## Icon Creation Options:
+
+### Option 1: Use ImageMagick to create a simple placeholder
+```bash
+convert -size 48x48 xc:transparent \
+  -fill "#4A90E2" -draw "rectangle 8,12 40,36" \
+  -fill "#2C5F8F" -draw "rectangle 12,18 36,30" \
+  -fill "#FFD700" -draw "circle 14,33 14,35" \
+  -fill "#00FF00" -draw "circle 20,33 20,35" \
+  images/drive.png
+```
+
+### Option 2: Use online icon generators
+- https://www.flaticon.com/search?word=tape+drive
+- https://thenounproject.com/search/?q=tape+drive
+
+### Option 3: Create manually
+Use any graphics tool (GIMP, Photoshop, etc.) to create a 48x48 icon.
+
+## Note:
+Remove this placeholder file after adding the actual drive.png icon.
